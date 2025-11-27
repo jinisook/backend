@@ -53,6 +53,9 @@ public class MemberController {
     public String postRegister(@Valid RegisterDTO dto, BindingResult result) {
         log.info("회원가입 {}" ,dto);
         if(result.hasErrors()){
+            // for (Object fieldError : result.getAllErrors()) {
+            //     System.out.println(fieldError);
+            // }
             return "/member/register";
         }
         return "redirect:/member/login";
