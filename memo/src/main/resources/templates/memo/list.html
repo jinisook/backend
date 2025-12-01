@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/main_layout}">
+  <div layout:fragment="content">
+    <h1>LIST</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">내용</th>
+          <th scope="col">작성일자</th>
+          <th scope="col">수정일자</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="dto : ${list}">
+          <th scope="row" th:text="${dto.id}"></th>
+          <td>
+            <a th:href="@{/memo/read(id=${dto.id})}" th:text="${dto.text}"></a>
+          </td>
+          <td th:text="${#temporals.format(dto.createDate,'yyyy-MM-dd HH:mm')}"></td>
+          <td th:text="${#temporals.format(dto.updateDate,'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <th:block layout:fragment="script">
+    <!-- 페이지별 개별 javascript 작성 -->
+    <script th:inline="javascript">
+      let msg = [[${msg}]];
+      console.log(msg);
+
+      if (msg) {
+          Swal.fire({
+            title: msg,
+            icon: "success",
+            draggable: true,
+          });
+
+      }
+    </script>
+  </th:block>
+</html>

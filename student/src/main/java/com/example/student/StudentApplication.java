@@ -1,15 +1,15 @@
-package com.example.memo;
+package com.example.student;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@EnableJpaAuditing
+@EnableJpaAuditing // 날짜 시간 자동
 @SpringBootApplication
-public class MemoApplication {
+public class StudentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MemoApplication.class, args);
+		SpringApplication.run(StudentApplication.class, args);
 	}
 
 }
