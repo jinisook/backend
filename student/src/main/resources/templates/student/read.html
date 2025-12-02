@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/main_layout}">
+  <div layout:fragment="content">
+    <h1 class="mb-4">💡 학생 조회</h1>
+    <form action="" method="post" id="insert-form">
+      <div class="mb-3">
+        <label for="id" class="form-label">아이디</label>
+        <input type="text" name="id" id="id" class="form-control" th:value="${dto.id}" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="text" class="form-label">이 름</label>
+        <input type="text" name="name" id="name" class="form-control" th:value="${dto.name}" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="text" class="form-label">성 별</label>
+        <input type="text" name="gender" id="gender" class="form-control" th:value="${dto.gender}" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="addr" class="form-label">주 소</label>
+        <input type="text" name="addr" id="addr" class="form-control" th:value="${dto.addr}" readonly />
+      </div>
+      <div class="mb-5">
+        <label for="grade" class="form-label">학 년</label>
+        <select class="form-select" aria-label="Default select example" name="grade" disabled>
+          <option value="FRESHMAN" th:selected="${dto.grade.name()} == 'FRESHMAN'">FRESHMAN</option>
+          <option value="SOPHOMORE" th:selected="${dto.grade.name()} == 'SOPHOMORE'">SOPHOMORE</option>
+          <option value="JUNIOR" th:selected="${dto.grade.name() == 'JUNIOR'}">JUNIOR</option>
+          <option value="SENIOR" th:selected="${dto.grade.name() == 'SENIOR'}">SENIOR</option>
+        </select>
+      </div>
+      <a type="button" class="btn btn-outline-success" th:href="@{/student/list}">목 록</a>
+      <a type="button" class="btn btn-outline-primary" th:href="@{/student/modify(id=${dto.id})}">수 정</a>
+    </form>
+  </div>
+</html>

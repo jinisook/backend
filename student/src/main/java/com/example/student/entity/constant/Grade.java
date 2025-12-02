@@ -1,5 +1,5 @@
 package com.example.student.entity.constant;
 
 public enum Grade {
-    FRESHMAN, SOPHMORE, JUNIOR, SENIOR 
+    FRESHMAN, SOPHOMORE, JUNIOR, SENIOR 
 }

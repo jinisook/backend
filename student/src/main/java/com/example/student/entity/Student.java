@@ -53,7 +53,7 @@ public class Student {
     @Column(columnDefinition = "varchar(1) CONSTRAINT chk_gender CHECK (gender IN('M','F'))")
     private String gender;
 
-    // grade => FRESHMAN, SOPHMORE, JUNIOR, SENIOR 
+    // grade => FRESHMAN, SOPHOMORE, JUNIOR, SENIOR 
     @Enumerated(EnumType.STRING)
     @Column
     private Grade grade; 
