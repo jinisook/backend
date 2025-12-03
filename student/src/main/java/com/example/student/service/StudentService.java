@@ -2,6 +2,8 @@ package com.example.student.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
@@ -36,11 +38,14 @@ public class StudentService {
         // select ~~~~ order by id desc;
         List<Student> result =studentRepository.findAll(Sort.by(Sort.Direction.DESC, "id")); // findAll -> List<>로 받음
         // entity => dto 변경
-        List<StudentDTO> list = new ArrayList<>();
-        for (Student student : result) {
-            list.add(modelMapper.map(student, StudentDTO.class));
+        // List<StudentDTO> list = new ArrayList<>();
+        // for (Student student : result) {
+        //     list.add(modelMapper.map(student, StudentDTO.class));
             
-        }
+        // }
+        List<StudentDTO> list = result.stream()
+        .map(student -> modelMapper.map(student, StudentDTO.class))
+        .collect(Collectors.toList());
         return list;
 
     }

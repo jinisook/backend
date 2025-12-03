@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
-@EntityListeners(value = AuditingEntityListener.class)
+@EntityListeners(value = AuditingEntityListener.class) // 엔티티의 생성일/수정일/생성자/수정자를 자동으로 채우고 싶을 때 사용하는 어노테이션
 @Getter
 @Builder
 @NoArgsConstructor
