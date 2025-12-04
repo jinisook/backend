@@ -1,6 +1,5 @@
 package com.example.book.entity;
 
-
 import groovy.transform.ToString;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +12,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @Getter
 @Builder
 @NoArgsConstructor
@@ -22,27 +20,32 @@ import lombok.NoArgsConstructor;
 @Table(name = "booktbl")
 @Entity
 public class Book {
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    
+
     @Column(unique = true, nullable = false)
     private String isbn;
-    
+
     @Column(nullable = false)
     private String title;
-    
+
     @Column(nullable = false)
     private int price;
-    
+
     @Column(nullable = false)
     private String author;
+
+    // 나중에 추가한 경우, -> properties에 update로 변경
+    private String description;
 
     public void changePrice(int price) {
         this.price = price;
     }
 
-    
+    public void chageDescription(String description) {
+        this.description = description;
+    }
 
 }

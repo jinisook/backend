@@ -25,13 +25,13 @@ public class BookService {
 
     // CRUD 메소드 호출하는 서비스 메소드
 
-    public Long create(BookDTO bookDTO) {
+    public String create(BookDTO bookDTO) {
         // bookDTO => entity 변경
         // 1. 직접 코드 작성
         // 2. ModelMapper 라이브러리 사용
         // Book book = mapper.map(bookDTO, Book.class); -> 변수사용
         // bookRepository.save(book);
-        return bookRepository.save(mapper.map(bookDTO, Book.class)).getId();
+        return bookRepository.save(mapper.map(bookDTO, Book.class)).getTitle();
     }
 
     // 'R'ead(하나만 조회, 여러 개 조회)
@@ -67,6 +67,7 @@ public class BookService {
     public Long update(BookDTO upDto) {
         Book book = bookRepository.findById(upDto.getId()).orElseThrow();
         book.changePrice(upDto.getPrice());
+        book.chageDescription(upDto.getDescription());
 
         return bookRepository.save(book).getId();
 
@@ -74,6 +75,20 @@ public class BookService {
 
     public void delete(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    public List<BookDTO> getList() {
+        List<Book> result = bookRepository.findAll();
+
+        return result.stream()
+                .map(book -> mapper.map(book, BookDTO.class))
+                .collect(Collectors.toList());
+
+        // List<BookDTO> list = result.stream()
+        // .map(book -> mapper.map(book, BookDTO.class))
+        // .collect(Collectors.toList());
+
+        // return list;
     }
 
 }

@@ -4,51 +4,46 @@
     <h2 class="mb-5" style="text-align: center">📌 BOOK REGISTER 📌</h2>
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Forms</h5>
+        <h5 class="card-title fw-semibold mb-4">◼︎ Register</h5>
         <div class="card">
           <div class="card-body">
-            <form>
+            <form action="" method="post" th:object="${bookDTO}">
+              <!-- th:object="${bookDTO}" 입력 필수 -->
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <label for="isbn" class="form-label">ISBN</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="isbn"
+                  aria-describedby="isbn"
+                  name="isbn"
+                  th:value="${bookDTO.isbn}"
+                />
+                <div class="text-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></div>
+              </div>
+
+              <div class="mb-3">
+                <label for="title" class="form-label">TITLE</label>
+                <input type="text" class="form-control" id="title" name="title" th:value="${bookDTO.title}" />
+                <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" />
+                <label for="author" class="form-label">AUTHOR</label>
+                <input type="text" class="form-control" id="author" name="author" th:value="${bookDTO.author}" />
+                <div class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
               </div>
-              <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              <div class="mb-4">
+                <label for="price" class="form-label">PRICE</label>
+                <input type="number" class="form-control" id="price" name="price" th:value="${bookDTO.price}" />
+                <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+              </div>
+              <div class="mb-4">
+                <label for="price" class="form-label">DESCRIPTION</label>
+                <textarea class="form-control" id="description" name="description" rows="3">
+                [[${bookDTO.description}]]
+                </textarea>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-        </div>
-        <h5 class="card-title fw-semibold mb-4">Disabled forms</h5>
-        <div class="card mb-0">
-          <div class="card-body">
-            <form>
-              <fieldset disabled>
-                <legend>Disabled fieldset example</legend>
-                <div class="mb-3">
-                  <label for="disabledTextInput" class="form-label">Disabled input</label>
-                  <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input" />
-                </div>
-                <div class="mb-3">
-                  <label for="disabledSelect" class="form-label">Disabled select menu</label>
-                  <select id="disabledSelect" class="form-select">
-                    <option>Disabled select</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled />
-                    <label class="form-check-label" for="disabledFieldsetCheck"> Can't check this </label>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </fieldset>
             </form>
           </div>
         </div>
