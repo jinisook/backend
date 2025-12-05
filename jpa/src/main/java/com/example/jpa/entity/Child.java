@@ -6,37 +6,31 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ToString(exclude = "team")
+@ToString(exclude = "parent")
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class TeamMember {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Child {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CHILD_ID")
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    // 외래키 설정방법
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    // fetch = FetchType.LAZY -> 필요할 때만 가져와
-    // @ManyToOne(optional = false)
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Parent parent;
 
-    public void changeTeam(Team team) {
-        this.team = team;
-    }
 }
