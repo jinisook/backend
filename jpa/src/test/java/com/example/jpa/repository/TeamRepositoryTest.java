@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 
 import com.example.jpa.entity.Team;
 import com.example.jpa.entity.TeamMember;
@@ -165,6 +166,47 @@ public class TeamRepositoryTest {
         System.out.println(member);
         // 멤버를 통해서 팀정보를 가져오고 싶을 때,
         System.out.println(member.getTeam());
+
+    }
+
+    // cascade 개념 적용
+    @Test
+    public void insertCascadeTest() {
+        Team team = Team.builder().name("new").build();
+
+        team.getMembers().add(TeamMember.builder().name("유우시").team(team).build());
+        teamRepository.save(team);
+
+    }
+
+    @Test
+    public void removeCascadeTest() {
+        teamRepository.deleteById(4L);
+
+    }
+
+    // orphanRemoval = true 적용
+    @Commit
+    @Transactional // Rollback 개념
+    @Test
+    public void removeOrphanTest() {
+        Team team = teamRepository.findById(3L).get();
+        team.getMembers().remove(0);
+        teamRepository.save(team);
+
+    }
+
+    @Commit
+    @Transactional
+    @Test
+    public void updateCascadeTest() {
+        // dirty checking 적용
+        Team team = teamRepository.findById(5L).get();
+        team.changeName("sunflower");
+        TeamMember teamMember = team.getMembers().get(0);
+        teamMember.changeName("토쿠노유우시");
+
+        // teamRepository.save(team);
 
     }
 

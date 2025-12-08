@@ -3,6 +3,7 @@ package com.example.jpa.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +33,13 @@ public class Parent {
     private String name;
 
     @Builder.Default
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval = true)
+    // PERSIST : 삽입 시, REMOVE : 삭제 시
     private List<Child> childs = new ArrayList<>();
     // 1:M -> list로 가져와야함
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
 }

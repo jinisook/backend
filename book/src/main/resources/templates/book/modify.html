@@ -52,20 +52,4 @@
   <th:block layout:fragment="script">
     <script th:href="@{/js/modify.js}"></script>
   </th:block>
-  <th:block layout:fragment="script">
-    <!-- 페이지별 개별 javascript 작성 -->
-    <script th:inline="javascript">
-      let msg = [[${msg}]];
-      console.log(msg);
-
-      if (msg) {
-          Swal.fire({
-            title: msg,
-            icon: "success",
-            draggable: true,
-          });
-
-      }
-    </script>
-  </th:block>
 </html>

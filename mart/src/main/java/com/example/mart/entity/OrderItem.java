@@ -1,4 +1,4 @@
-package com.example.jpa.entity;
+package com.example.mart.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,7 +6,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,33 +13,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ToString(exclude = "team")
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@ToString(exclude = { "order", "item" })
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-public class TeamMember {
-
+public class OrderItem {
+    // id, orderPrice(주문가격), count(주문수량)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private int orderPrice;
 
-    // 외래키 설정방법
+    @Column(nullable = false)
+    private int count;
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    // fetch = FetchType.LAZY -> 필요할 때만 가져와
-    // @ManyToOne(optional = false)
-    @JoinColumn(name = "team_id")
-    private Team team;
+    private Order order;
 
-    public void changeTeam(Team team) {
-        this.team = team;
-    }
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Item item;
 
-    public void changeName(String name) {
-        this.name = name;
-    }
 }

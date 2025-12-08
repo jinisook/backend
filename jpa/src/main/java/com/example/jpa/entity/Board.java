@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@EntityListeners(value = AuditingEntityListener.class)
+// @EntityListeners(value = AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -31,7 +31,7 @@ import lombok.ToString;
 @ToString
 @Table(name = "boardtbl")
 @Entity
-public class Board {
+public class Board extends BaseEntity {
     // id(자동 순번), 제목(title), 내용(content - 1500자), 작성자(writer - 20자)
     // 작성일, 수정일
 
@@ -44,23 +44,22 @@ public class Board {
 
     @Column(nullable = false, length = 1500)
     private String content;
-    
+
     @Column(nullable = false, length = 20)
     private String writer;
 
-    @CreatedDate // 날짜 자동으로(스프링부트에서 만든 거 사용) - 생성된 날짜
-    private LocalDateTime createDate;
+    // @CreatedDate // 날짜 자동으로(스프링부트에서 만든 거 사용) - 생성된 날짜
+    // private LocalDateTime createDate;
 
-    @LastModifiedDate // 수정될 대마다 항상 자동 업데이트 - 마지막 수정 날짜
-    private LocalDateTime updateDate;
+    // @LastModifiedDate // 수정될 대마다 항상 자동 업데이트 - 마지막 수정 날짜
+    // private LocalDateTime updateDate;
 
-    public void changeTitle(String title){
+    public void changeTitle(String title) {
         this.title = title;
     }
 
-    public void changeContent(String content){
+    public void changeContent(String content) {
         this.content = content;
     }
-
 
 }

@@ -16,6 +16,7 @@
           </thead>
           <tbody>
             <tr th:each=" dto : ${list}">
+              <!-- list -> BookController에서 model에 넣어준 데이터 -->
               <th scope="row" th:text="${dto.isbn}"></th>
               <td><a th:href="@{/book/read(id=${dto.id})}" th:text="${dto.title}"></a></td>
               <td th:text="${dto.price}"></td>

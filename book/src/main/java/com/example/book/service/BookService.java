@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class BookService {
 
-    private final BookRepository bookRepository; // repository 무조건 둬야함\
+    private final BookRepository bookRepository; // repository 무조건 둬야함
 
     private final ModelMapper mapper;
 

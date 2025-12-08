@@ -1,12 +1,10 @@
-package com.example.jpa.entity;
+package com.example.mart.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,29 +16,36 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ToString(exclude = "members")
-// @ToString
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@Table(name = "teambl")
+@ToString(exclude = "orders")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "mart_member")
 @Entity
-public class Team {
+public class Member extends BaseEntity {
+    // id, name, city, street, zipcode
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "team_id")
+    @Column
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Builder.Default // builder로 객체 생성할 때 자동으로,
-    @OneToMany(mappedBy = "team", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, orphanRemoval = true)
-    private List<TeamMember> members = new ArrayList<>();
+    @Column
+    private String city;
 
-    public void changeName(String name) {
-        this.name = name;
-    }
+    @Column
+    private String street;
+
+    @Column
+    private String zipcode;
+
+    // Many를 가지고 올땐 -> LIST
+    @Builder.Default
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
 }
