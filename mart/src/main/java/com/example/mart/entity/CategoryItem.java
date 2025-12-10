@@ -15,32 +15,24 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@ToString(exclude = { "order", "item" })
+@ToString(exclude = { "category", "item" })
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class OrderItem {
-    // id, orderPrice(주문가격), count(주문수량)
+public class CategoryItem {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column
+    @Column(name = "category_item_id")
     private Long id;
 
-    @Column(nullable = false)
-    private int orderPrice;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    @Column(nullable = false)
-    private int count;
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Order order;
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "item_id")
     private Item item;
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 }

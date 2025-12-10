@@ -1,6 +1,7 @@
 package com.example.jpa.repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -207,6 +208,53 @@ public class TeamRepositoryTest {
         teamMember.changeName("토쿠노유우시");
 
         // teamRepository.save(team);
+
+    }
+
+    // 쿼리 테스트
+    @Test
+    public void queryTest() {
+        Team team = teamRepository.findById(5L).get();
+        List<Object[]> result = teamMemberRepository.findByMemberAndTeam(team);
+        for (Object[] objects : result) {
+            // System.out.println(Arrays.toString(objects));
+
+            TeamMember member = (TeamMember) objects[0]; // 무조건 형변환
+            Team team1 = (Team) objects[1];
+
+            System.out.println(member);
+            System.out.println(team1);
+        }
+
+    }
+
+    @Test
+    public void queryTest2() {
+        List<Object[]> result = teamMemberRepository.findByMemberAndTeam2(5L);
+        for (Object[] objects : result) {
+            // System.out.println(Arrays.toString(objects));
+
+            TeamMember member = (TeamMember) objects[0]; // 무조건 형변환
+            Team team1 = (Team) objects[1];
+
+            System.out.println(member);
+            System.out.println(team1);
+        }
+
+    }
+
+    @Test
+    public void queryTest3() {
+        List<Object[]> result = teamMemberRepository.findByMemberAndTeam3();
+        for (Object[] objects : result) {
+            // System.out.println(Arrays.toString(objects));
+
+            TeamMember member = (TeamMember) objects[0]; // 무조건 형변환
+            Team team1 = (Team) objects[1];
+
+            System.out.println(member);
+            System.out.println(team1);
+        }
 
     }
 

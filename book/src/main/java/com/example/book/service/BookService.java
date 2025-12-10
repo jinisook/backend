@@ -7,14 +7,22 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.book.dto.BookDTO;
+import com.example.book.dto.PageRequestDTO;
+import com.example.book.dto.PageResultDTO;
 import com.example.book.entity.Book;
 import com.example.book.repository.BookRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class BookService {
@@ -38,6 +46,7 @@ public class BookService {
     // 검색 : title => %자바% -> 여러 개 조회
     // isbn => (unique = true) -> 하나만 조희
     // id => (pk) -> 하나만 조희
+    @Transactional(readOnly = true)
     public List<BookDTO> readTitle(String title) {
         List<Book> result = bookRepository.findByTitleContaining(title);
 
@@ -50,6 +59,7 @@ public class BookService {
         return result.stream().map(book -> mapper.map(book, BookDTO.class)).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public BookDTO readIsbn(String isbn) {
         Book book = bookRepository.findByIsbn(isbn).orElseThrow();
 
@@ -57,6 +67,7 @@ public class BookService {
 
     }
 
+    @Transactional(readOnly = true)
     public BookDTO readId(Long id) {
         Book book = bookRepository.findById(id).orElseThrow();
 
@@ -69,7 +80,8 @@ public class BookService {
         book.changePrice(upDto.getPrice());
         book.chageDescription(upDto.getDescription());
 
-        return bookRepository.save(book).getId();
+        // return bookRepository.save(book).getId(); -> dirty checking 확인
+        return book.getId();
 
     }
 
@@ -77,12 +89,30 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public List<BookDTO> getList() {
-        List<Book> result = bookRepository.findAll();
+    @Transactional(readOnly = true)
+    public PageResultDTO<BookDTO> getList(PageRequestDTO pageRequestDTO) {
+        // pageNumber : 0으로 시작(1page 개념)
+        Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(),
+                Sort.by("id").descending());
 
-        return result.stream()
+        // findAll(Predicate predicate, Pageable pageable)
+        Page<Book> result = bookRepository.findAll(bookRepository.makePredicate(null, null), pageable);
+        List<BookDTO> dtoList = result.get() // get이라는 메소드를 쓰면 stream 으로 바꿔줌
                 .map(book -> mapper.map(book, BookDTO.class))
                 .collect(Collectors.toList());
+        // 전체 행의 개수
+        long totalCount = result.getTotalElements();
+        return PageResultDTO.<BookDTO>withAll()
+                .dtoList(dtoList)
+                .pageRequestDTO(pageRequestDTO)
+                .totalCount(totalCount)
+                .build();
+
+        // ----------------------------------------------
+        // List<Book> result = bookRepository.findAll();
+        // return result.stream()
+        // .map(book -> mapper.map(book, BookDTO.class))
+        // .collect(Collectors.toList());
 
         // List<BookDTO> list = result.stream()
         // .map(book -> mapper.map(book, BookDTO.class))

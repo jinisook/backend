@@ -20,42 +20,30 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@ToString(exclude = { "orderItems" })
+@ToString(exclude = {})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "mart_item")
+@Table
 @Entity
-public class Item {
-    // id, name, price, quantity
+public class Category {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "item_id")
+    @Column(name = "category_id")
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int price;
-
-    @Column(nullable = false)
-    private int quantity;
-
     @Builder.Default
-    @OneToMany(mappedBy = "item")
-    private List<OrderItem> orderItems = new ArrayList<>();
-
-    public void changeQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    // 양방향
-    // @Builder.Default
-    // @ManyToMany(mappedBy = "items")
-    // private List<Category> categories = new ArrayList<>();
-
-    @Builder.Default
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "category")
     private List<CategoryItem> categoryItems = new ArrayList<>();
+
+    // 다대다 관계 JPA에게 직접 실행
+    // 단점 : 컬럼 추가 어려움(실무에서 사용하기 어려움)
+    // @Builder.Default
+    // @ManyToMany
+    // @JoinTable(name = "category_item", joinColumns = @JoinColumn(name =
+    // "category_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+    // private List<Item> items = new ArrayList<>();
 }
