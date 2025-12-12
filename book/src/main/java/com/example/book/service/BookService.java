@@ -96,7 +96,8 @@ public class BookService {
                 Sort.by("id").descending());
 
         // findAll(Predicate predicate, Pageable pageable)
-        Page<Book> result = bookRepository.findAll(bookRepository.makePredicate(null, null), pageable);
+        Page<Book> result = bookRepository
+                .findAll(bookRepository.makePredicate(pageRequestDTO.getType(), pageRequestDTO.getKeyword()), pageable);
         List<BookDTO> dtoList = result.get() // get이라는 메소드를 쓰면 stream 으로 바꿔줌
                 .map(book -> mapper.map(book, BookDTO.class))
                 .collect(Collectors.toList());

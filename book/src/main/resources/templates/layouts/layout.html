@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>JINIBOOKS</title>
     <link rel="shortcut icon" type="image/png" th:href="@{/assets/images/logos/favicon.png}" />
-    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/styles.min.css}" href="/assets/css/styles.min.css" />
     <th:block layout:fragment="css">
       <!-- 페이지마다 다른 css 작성 영역 -->
     </th:block>
@@ -34,7 +34,6 @@
         <!--  Header Start -->
         <!-- fragment/header::header로 대체하는 코드 -->
         <div th:replace="~{fragments/header::header}"></div>
-
         <!--  Header End -->
         <div class="body-wrapper-inner">
           <div class="container-fluid">

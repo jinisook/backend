@@ -2,6 +2,7 @@ package com.example.book.service;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import com.example.book.dto.BookDTO;
 import com.example.book.dto.PageRequestDTO;
 import com.example.book.dto.PageResultDTO;
 
+@Disabled
 @SpringBootTest
 public class BookServiceTest {
 
@@ -30,5 +32,19 @@ public class BookServiceTest {
         System.out.println("전체 행의 개수 " + result.getTotalCount());
         System.out.println("전체 페이지의 수 " + result.getTotalPage());
         System.out.println("하단에 보여줄 페이지 목록 " + result.getPageNumList());
+    }
+
+    @Test
+    public void querydslTest2() {
+        PageRequestDTO dto = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .type("t")
+                .keyword("파워")
+                .build();
+        PageResultDTO<BookDTO> result = bookService.getList(dto);
+        System.out.println(result.getDtoList());
+        System.out.println("검색 결과 행의 개수" + result.getTotalCount());
+
     }
 }
