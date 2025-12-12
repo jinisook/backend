@@ -39,15 +39,15 @@
             <!-- PageResultDTO - 화면에 보여줄 목록 private List<E> dtoList; -->
             <tr th:each="dto : ${result.dtoList}">
               <!-- list -> BookController에서 model에 넣어준 데이터 -->
-              <th scope="row" th:text="${dto.isbn}"></th>
+              <th scope="row" th:text="${dto.bno}"></th>
               <td>
                 <a
-                  th:href="@{/book/read(id=${dto.id},page=${result.current},size=${result.pageRequestDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}"
-                  th:text="${dto.title}"
-                ></a>
+                  th:href="@{/board/read(bno=${dto.bno},page=${result.current},size=${result.pageRequestDTO.size},type=${pageRequestDTO.type},keyword=${pageRequestDTO.keyword})}"
+                  >[[${dto.title}]]---[<b th:text="${dto.replyCnt}"></b>]</a
+                >
               </td>
-              <td th:text="${dto.price}"></td>
-              <td th:text="${dto.author}"></td>
+              <td th:text="${dto.writerName}"></td>
+              <td th:text="${#temporals.format(dto.createDate,'yyyy-MM-dd HH:mm')}"></td>
             </tr>
           </tbody>
         </table>
