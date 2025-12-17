@@ -37,7 +37,10 @@ public class BoardService {
         Pageable pageable = PageRequest.of(requestDTO.getPage() - 1, requestDTO.getSize(), Sort.by("bno").descending());
 
         // Page<Board> result = boardRepository.findAll(pageable);
-        Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
+        // Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
+
+        Page<Object[]> result = boardRepository.list(requestDTO.getType(), requestDTO.getKeyword(), pageable);
+
         // 번호, 제목(댓글개수), 작성자, 작성일
         // service까지만 entity 사용, controller 넘어가면 dto 사용
         Function<Object[], BoardDTO> f = en -> entityToDto((Board) en[0], (Member) en[1], (Long) en[2]);
@@ -60,7 +63,14 @@ public class BoardService {
 
     }
 
-    public void insert(BoardDTO dto) {
+    public Long insert(BoardDTO dto) {
+        Member member = Member.builder().email(dto.getWriterEmail()).build();
+        Board board = Board.builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .writer(member)
+                .build();
+        return boardRepository.save(board).getBno();
     }
 
     public void update(BoardDTO dto) {

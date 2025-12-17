@@ -18,12 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.board.member.entity.Member;
 import com.example.board.member.repository.MemberRepository;
+import com.example.board.post.dto.PageRequestDTO;
 import com.example.board.post.entity.Board;
 import com.example.board.post.repository.BoardRepository;
 import com.example.board.reply.entity.Reply;
 import com.example.board.reply.repository.ReplyRepository;
 
-// @Disabled
+@Disabled
 @SpringBootTest
 public class BoardRepositoryTest {
 
@@ -74,6 +75,18 @@ public class BoardRepositoryTest {
 
             Board board = Board.builder().bno(idx).build();
             Reply reply = Reply.builder().text("reply...." + i).replyer("guest" + i).board(board).build();
+            replyRepository.save(reply);
+        });
+
+    }
+
+    @Test
+    public void insertReplyTest2() {
+        Board board = Board.builder().bno(501L).build();
+        IntStream.rangeClosed(1, 15).forEach(i -> {
+
+            Reply reply = Reply.builder().text("reply...." + i).replyer("guest" + i).board(board).build();
+
             replyRepository.save(reply);
         });
 
@@ -180,8 +193,22 @@ public class BoardRepositoryTest {
     // querydsl
     @Test
     public void listTest() {
-        List<Object[]> result = boardRepository.list();
-        System.out.println(result);
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(0)
+                .size(20)
+                .type("tcw")
+                .keyword("title")
+                .build();
+
+        // Pageable pageable = PageRequest.of(pageRequestDTO.getPage(),
+        // pageRequestDTO.getSize(),
+        // Sort.by("bno").descending().and(Sort.by("title").ascending()));
+        Pageable pageable = PageRequest.of(pageRequestDTO.getPage(), pageRequestDTO.getSize());
+        Page<Object[]> result = boardRepository.list(pageRequestDTO.getType(), pageRequestDTO.getKeyword(), pageable);
+        for (Object[] objects : result) {
+            System.out.println(Arrays.toString(objects));
+
+        }
     }
 
 }

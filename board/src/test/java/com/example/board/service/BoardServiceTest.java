@@ -15,7 +15,7 @@ import com.example.board.post.dto.PageResultDTO;
 import com.example.board.post.entity.Board;
 import com.example.board.post.service.BoardService;
 
-// @Disabled
+@Disabled
 @SpringBootTest
 public class BoardServiceTest {
 

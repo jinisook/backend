@@ -63,16 +63,17 @@
     <!-- 페이지별 개별 javascript 작성 -->
     <script th:inline="javascript">
       let msg = [[${msg}]];
-      console.log(msg);
+      const bno = [[${dto.bno}]]
 
       if (msg) {
           Swal.fire({
             title: msg,
             icon: "success",
-            draggable: true,
+            draggable: true
           });
 
       }
     </script>
+    <script th:src="@{/js/read.js}"></script>
   </th:block>
 </html>
