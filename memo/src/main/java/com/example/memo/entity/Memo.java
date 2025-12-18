@@ -17,14 +17,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @EntityListeners(value = AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Setter
 @Getter
 @ToString
 @Table(name = "memotbl") // -> 테이블 이름을 memo가 아닌 memotbl로 변경
@@ -36,11 +34,11 @@ public class Memo {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 숫자 증가 시 사용
     @Id // id는 무조건 있어야 됨 -> primary key(PK) 필요하기 때문
-    @Column(name="mno") // -> 테이블에서는 mno로 지정
+    @Column(name = "mno") // -> 테이블에서는 mno로 지정
     private Long id;
 
     @Column(nullable = false, name = "memo_text") // (nullable = fales) == not null 의미
-    private String text;  // db에서는 memo_text
+    private String text; // db에서는 memo_text
 
     @CreatedDate // 날짜 자동으로(스프링부트에서 만든 거 사용) - 생성된 날짜
     private LocalDateTime createDate;
@@ -49,11 +47,8 @@ public class Memo {
     private LocalDateTime updateDate;
 
     // text 수정 메소드
-    public void changeText(String text){
+    public void changeText(String text) {
         this.text = text;
     }
-    
-
-
 
 }
