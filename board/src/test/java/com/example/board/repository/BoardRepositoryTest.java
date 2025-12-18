@@ -137,45 +137,47 @@ public class BoardRepositoryTest {
         result.forEach(obj -> System.out.println(Arrays.toString(obj)));
     }
 
-    @Test
-    public void getBoardWithReplyCountTest() {
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
-        Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
-        // 기본적인 구문
-        // for (Object[] objects : result) {
-        // // System.out.println(Arrays.toString(objects));
-        // Board board = (Board) objects[0];
-        // Member member = (Member) objects[1];
-        // Long replyCnt = (Long) objects[2];
-        // System.out.println(board);
-        // System.out.println(member);
-        // System.out.println(replyCnt);
+    // @Test
+    // public void getBoardWithReplyCountTest() {
+    // Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+    // Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
+    // // 기본적인 구문
+    // // for (Object[] objects : result) {
+    // // // System.out.println(Arrays.toString(objects));
+    // // Board board = (Board) objects[0];
+    // // Member member = (Member) objects[1];
+    // // Long replyCnt = (Long) objects[2];
+    // // System.out.println(board);
+    // // System.out.println(member);
+    // // System.out.println(replyCnt);
 
-        // }
+    // // }
 
-        // Stream<Object[]> data = result.get();
-        // Stream<Object[]> data2 = result.getContent().stream(); // getContent()은 목록으로
-        // 되어있는 것을 Stream으로
+    // // Stream<Object[]> data = result.get();
+    // // Stream<Object[]> data2 = result.getContent().stream(); // getContent()은
+    // 목록으로
+    // // 되어있는 것을 Stream으로
 
-        result.get().forEach(obj -> {
-            // System.out.println(Arrays.toString(obj));
-            Board board = (Board) obj[0];
-            Member member = (Member) obj[1];
-            Long replyCnt = (Long) obj[2];
-        });
-        result.get().forEach(System.out::println);
-        // result.get().forEach(System.out.println(Arrays::toString));
-        // Arrays::toString -> 리턴 타입, Function 으로 받을 수 있음 Arrays를 받아서 String으로 만들어준다는 의미
+    // result.get().forEach(obj -> {
+    // // System.out.println(Arrays.toString(obj));
+    // Board board = (Board) obj[0];
+    // Member member = (Member) obj[1];
+    // Long replyCnt = (Long) obj[2];
+    // });
+    // result.get().forEach(System.out::println);
+    // // result.get().forEach(System.out.println(Arrays::toString));
+    // // Arrays::toString -> 리턴 타입, Function 으로 받을 수 있음 Arrays를 받아서 String으로 만들어준다는
+    // 의미
 
-        // Object[] => String
-        Function<Object[], String> f = Arrays::toString;
-        // Object[] objects
-        result.get().forEach(obj -> System.out.println(f.apply(obj)));
-    }
+    // // Object[] => String
+    // Function<Object[], String> f = Arrays::toString;
+    // // Object[] objects
+    // result.get().forEach(obj -> System.out.println(f.apply(obj)));
+    // }
 
     @Test
     public void getBoardByBnoTest() {
-        Object result = boardRepository.getBoardByBno(33L);
+        Object result = boardRepository.getBoardByBno(501L);
 
         Object[] arr = (Object[]) result;
 

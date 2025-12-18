@@ -105,4 +105,23 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         return new PageImpl<>(list, pageable, count);
     }
 
+    @Override
+    public Object[] getBoardByBno(Long bno) {
+        QBoard board = QBoard.board;
+        QMember member = QMember.member;
+        QReply reply = QReply.reply;
+
+        JPQLQuery<Board> query = from(board)
+                .leftJoin(member).on(board.writer.eq(member))
+                .leftJoin(reply).on(reply.board.eq(board))
+                .where(board.bno.eq(bno));
+        JPQLQuery<Tuple> tuple = query.select(board, member, reply.count());
+
+        System.out.println(tuple);
+
+        Tuple result = tuple.fetchFirst();
+
+        return result.toArray();
+    }
+
 }

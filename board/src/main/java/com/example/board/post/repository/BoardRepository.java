@@ -28,9 +28,10 @@ public interface BoardRepository extends JpaRepository<Board, Long>, SearchBoard
     @Query("select b,r from Board b left join Reply r on r.board = b where b.bno = :bno")
     List<Object[]> getBoardWithReply(@Param("bno") Long bno);
 
-    // service - getRow - 하나 조회
-    @Query("select b,m,count(r) from Board b left join b.writer m left join Reply r on r.board = b where b.bno = :bno")
-    Object getBoardByBno(@Param("bno") Long bno);
+    // service - getRow - 하나 조회 => querydsl 변경(댓글 처리) - Impl에 작성
+    // @Query("select b,m,count(r) from Board b left join b.writer m left join Reply
+    // r on r.board = b where b.bno = :bno")
+    // Object getBoardByBno(@Param("bno") Long bno);
 
     // 목록화면에 사용할 것 => 페이지 나누기 필요
     // 두줄 이상 쓸 때 각각의 구문 알려주기(value= , countQuery=)

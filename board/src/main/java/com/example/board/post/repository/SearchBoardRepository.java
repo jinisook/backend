@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SearchBoardRepository {
     Page<Object[]> list(String type, String keyword, Pageable pageable);
 
+    Object[] getBoardByBno(Long bno);
 }
