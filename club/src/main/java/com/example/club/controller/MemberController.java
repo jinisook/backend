@@ -22,6 +22,11 @@ public class MemberController {
         log.info("로그인 폼 요청");
     }
 
+    @GetMapping("/profile")
+    public void getProfile() {
+        log.info("프로필 폼 요청");
+    }
+
     @ResponseBody
     @GetMapping("/auth")
     public Authentication getAuthInfo() {

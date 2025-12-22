@@ -1,14 +1,20 @@
 package com.example.club.dto;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
-public class MemberDTO extends User {
+@ToString
+@Setter
+@Getter
+public class MemberDTO extends User implements OAuth2User {
 
     // member entity 정보 + 인증정보
     private String email;
@@ -19,27 +25,27 @@ public class MemberDTO extends User {
 
     private boolean fromSocial;
 
+    // OAuth2User 가 넘겨주는 attr 담기 위해
+    private Map<String, Object> attr;
+
     public MemberDTO(String username, String password, boolean fromSocial,
             Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.fromSocial = fromSocial;
         this.email = username;
+        this.password = password;
     }
-    /*
-     * custom login 처리
-     * 1. login Get 작성
-     * - 아이디에 해당하는 요소의 이름 : usernamne
-     * - 비밀번호에 해당하는 요소의 이름 : password
-     * 2. login Post 작성 안함
-     * 3. service 작성 : UserDetailsService 구현 클래스 작성
-     * - 리턴값은 무조건 UserDetails 리턴
-     * UserDetails
-     * | 상속
-     * |
-     * User
-     * | 상속
-     * |
-     * MemberDTO
-     * -> service에서 return new MemberDTO(username, username, false, null);
-     */
+
+    public MemberDTO(String username, String password, boolean fromSocial,
+            Collection<? extends GrantedAuthority> authorities, Map<String, Object> attr) {
+        this(username, password, fromSocial, authorities);
+        this.attr = attr;
+    }
+
+    // OAuth2User
+    @Override
+    public Map<String, Object> getAttributes() {
+        return this.attr;
+    }
+
 }
